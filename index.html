@@ -69,37 +69,36 @@
             border-color: #667eea;
         }
 
-        .format-group {
+        .type-group {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
-            flex-wrap: wrap;
         }
 
-        .format-option {
+        .type-option {
             flex: 1;
-            min-width: 80px;
-            padding: 12px;
+            padding: 15px;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
             background: white;
+            font-size: 16px;
         }
 
-        .format-option:hover {
+        .type-option:hover {
             border-color: #667eea;
             background: #f8f9ff;
         }
 
-        .format-option.selected {
+        .type-option.selected {
             border-color: #667eea;
             background: #667eea;
             color: white;
         }
 
-        .format-option input[type="radio"] {
+        .type-option input[type="radio"] {
             display: none;
         }
 
@@ -117,7 +116,7 @@
             margin-bottom: 10px;
         }
 
-        .download-btn:hover {
+        .download-btn:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
         }
@@ -132,72 +131,85 @@
             transform: none;
         }
 
-        .video-info {
-            background: #f8f9ff;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+        .download-options {
             display: none;
+            margin-top: 20px;
         }
 
-        .video-info.show {
+        .download-options.show {
             display: block;
         }
 
-        .video-info h3 {
+        .download-options h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .service-card {
+            background: #f8f9ff;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .service-name {
+            font-weight: 600;
             color: #333;
             font-size: 16px;
+        }
+
+        .service-badge {
+            background: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .service-desc {
+            color: #666;
+            font-size: 14px;
             margin-bottom: 10px;
         }
 
-        .video-info img {
-            width: 100%;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .download-links {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .download-link {
-            padding: 12px;
+        .service-link {
+            display: inline-block;
+            padding: 10px 20px;
             background: #667eea;
             color: white;
             text-decoration: none;
             border-radius: 8px;
-            text-align: center;
             transition: background 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            font-weight: 500;
         }
 
-        .download-link:hover {
+        .service-link:hover {
             background: #5568d3;
         }
 
-        .quality-badge {
-            background: rgba(255, 255, 255, 0.3);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-        }
-
         .status {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
             text-align: center;
             display: none;
-        }
-
-        .status.success {
-            background: #d4edda;
-            color: #155724;
-            display: block;
+            font-size: 14px;
         }
 
         .status.error {
@@ -206,40 +218,19 @@
             display: block;
         }
 
-        .status.loading {
-            background: #d1ecf1;
-            color: #0c5460;
-            display: block;
-        }
-
         .info-box {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
             padding: 15px;
             margin-top: 20px;
             border-radius: 5px;
             font-size: 14px;
-            color: #856404;
+            color: #0d47a1;
         }
 
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 10px auto;
-            display: none;
-        }
-
-        .spinner.show {
+        .info-box strong {
             display: block;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            margin-bottom: 8px;
         }
     </style>
 </head>
@@ -249,51 +240,52 @@
         <p class="subtitle">Ladda ner ljud eller video från YouTube</p>
 
         <div class="input-group">
-            <label>Välj nedladdningstyp</label>
-            <div class="format-group">
-                <label class="format-option selected">
+            <label>Vad vill du ladda ner?</label>
+            <div class="type-group">
+                <label class="type-option selected">
                     <input type="radio" name="downloadType" value="audio" checked>
-                    <div>🎵 Ljud</div>
+                    <div>🎵 Endast ljud</div>
                 </label>
-                <label class="format-option">
+                <label class="type-option">
                     <input type="radio" name="downloadType" value="video">
-                    <div>🎬 Video</div>
+                    <div>🎬 Video med ljud</div>
                 </label>
             </div>
         </div>
 
         <div class="input-group">
-            <label for="videoUrl">YouTube URL</label>
-            <input type="text" id="videoUrl" placeholder="Klistra in YouTube-länken här...">
+            <label for="videoUrl">YouTube-länk</label>
+            <input type="text" id="videoUrl" placeholder="https://www.youtube.com/watch?v=...">
         </div>
 
-        <button class="download-btn" onclick="getDownloadLinks()">
-            Hämta nedladdningslänkar
+        <button class="download-btn" onclick="showDownloadOptions()">
+            Visa nedladdningsalternativ
         </button>
-
-        <div class="spinner" id="spinner"></div>
-
-        <div class="video-info" id="videoInfo"></div>
 
         <div id="status" class="status"></div>
 
+        <div class="download-options" id="downloadOptions">
+            <h3>Välj en nedladdningstjänst:</h3>
+            <div id="servicesList"></div>
+        </div>
+
         <div class="info-box">
-            <strong>ℹ️ Så här fungerar det:</strong><br>
-            1. Klistra in en YouTube-länk<br>
+            <strong>📝 Så här fungerar det:</strong>
+            1. Klistra in din YouTube-länk ovan<br>
             2. Välj om du vill ha ljud eller video<br>
-            3. Klicka för att hämta nedladdningslänkar<br>
-            4. Välj kvalitet och ladda ner
+            3. Klicka på knappen för att se nedladdningsalternativ<br>
+            4. Välj en tjänst och följ instruktionerna på den sidan
         </div>
     </div>
 
     <script>
-        const downloadTypeOptions = document.querySelectorAll('input[name="downloadType"]');
+        const typeOptions = document.querySelectorAll('.type-option');
         
-        downloadTypeOptions.forEach(option => {
-            option.parentElement.addEventListener('click', () => {
-                document.querySelectorAll('.format-option').forEach(opt => opt.classList.remove('selected'));
-                option.parentElement.classList.add('selected');
-                option.checked = true;
+        typeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                typeOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                option.querySelector('input').checked = true;
             });
         });
 
@@ -304,157 +296,124 @@
         }
 
         function getVideoId(url) {
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11) ? match[2] : null;
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+                /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/
+            ];
+            
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match) return match[1];
+            }
+            return null;
         }
 
-        async function getDownloadLinks() {
+        function showDownloadOptions() {
             const videoUrl = document.getElementById('videoUrl').value.trim();
             const downloadType = document.querySelector('input[name="downloadType"]:checked').value;
-            const videoInfoEl = document.getElementById('videoInfo');
-            const spinner = document.getElementById('spinner');
+            const downloadOptionsEl = document.getElementById('downloadOptions');
+            const servicesListEl = document.getElementById('servicesList');
 
             if (!videoUrl) {
-                showStatus('Vänligen ange en YouTube URL', 'error');
+                showStatus('❌ Vänligen klistra in en YouTube-länk', 'error');
+                downloadOptionsEl.classList.remove('show');
                 return;
             }
 
             const videoId = getVideoId(videoUrl);
             if (!videoId) {
-                showStatus('Vänligen ange en giltig YouTube URL', 'error');
+                showStatus('❌ Ogiltig YouTube-länk. Kontrollera att länken är korrekt.', 'error');
+                downloadOptionsEl.classList.remove('show');
                 return;
             }
 
-            spinner.classList.add('show');
-            videoInfoEl.classList.remove('show');
-            showStatus('Hämtar information...', 'loading');
+            const fullUrl = `https://www.youtube.com/watch?v=${videoId}`;
+            const services = getServices(fullUrl, downloadType);
 
-            try {
-                // Använd yt-dlp JSON API via ett publikt API
-                const apiUrl = `https://yt-dlp-api.vercel.app/api/info?url=${encodeURIComponent(videoUrl)}`;
-                
-                const response = await fetch(apiUrl);
-                const data = await response.json();
+            servicesListEl.innerHTML = services.map(service => `
+                <div class="service-card">
+                    <div class="service-header">
+                        <span class="service-name">${service.name}</span>
+                        <span class="service-badge">${service.badge}</span>
+                    </div>
+                    <p class="service-desc">${service.description}</p>
+                    <a href="${service.url}" class="service-link" target="_blank" rel="noopener noreferrer">
+                        Öppna ${service.name} →
+                    </a>
+                </div>
+            `).join('');
 
-                if (data.error) {
-                    showStatus('Kunde inte hämta videoinfo: ' + data.error, 'error');
-                    spinner.classList.remove('show');
-                    return;
-                }
-
-                displayDownloadOptions(data, downloadType);
-                showStatus('', 'success');
-                
-            } catch (error) {
-                console.error('Error:', error);
-                
-                // Fallback: Visa direkta nedladdningslänkar
-                showFallbackOptions(videoId, downloadType);
-            } finally {
-                spinner.classList.remove('show');
-            }
-        }
-
-        function displayDownloadOptions(data, downloadType) {
-            const videoInfoEl = document.getElementById('videoInfo');
+            downloadOptionsEl.classList.add('show');
+            document.getElementById('status').style.display = 'none';
             
-            let html = `
-                <h3>${data.title || 'YouTube Video'}</h3>
-                ${data.thumbnail ? `<img src="${data.thumbnail}" alt="Thumbnail">` : ''}
-                <div class="download-links">
-            `;
-
-            if (downloadType === 'audio') {
-                html += `
-                    <a href="https://loader.to/api/button/?url=${encodeURIComponent(data.webpage_url || data.url)}&f=mp3" 
-                       class="download-link" target="_blank">
-                        <span>🎵 Ladda ner som MP3</span>
-                        <span class="quality-badge">Audio</span>
-                    </a>
-                    <a href="https://www.y2mate.com/youtube/${data.id}" 
-                       class="download-link" target="_blank">
-                        <span>🎵 Alternativ nedladdning</span>
-                        <span class="quality-badge">Y2Mate</span>
-                    </a>
-                `;
-            } else {
-                html += `
-                    <a href="https://loader.to/api/button/?url=${encodeURIComponent(data.webpage_url || data.url)}&f=1080" 
-                       class="download-link" target="_blank">
-                        <span>🎬 Ladda ner video</span>
-                        <span class="quality-badge">1080p</span>
-                    </a>
-                    <a href="https://www.y2mate.com/youtube/${data.id}" 
-                       class="download-link" target="_blank">
-                        <span>🎬 Alternativ nedladdning</span>
-                        <span class="quality-badge">Y2Mate</span>
-                    </a>
-                `;
-            }
-
-            html += '</div>';
-            videoInfoEl.innerHTML = html;
-            videoInfoEl.classList.add('show');
-            showStatus('Klicka på en länk för att ladda ner!', 'success');
+            // Scrolla ner till alternativen
+            downloadOptionsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
-        function showFallbackOptions(videoId, downloadType) {
-            const videoInfoEl = document.getElementById('videoInfo');
-            const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+        function getServices(videoUrl, type) {
+            const encodedUrl = encodeURIComponent(videoUrl);
             
-            let html = `
-                <h3>Nedladdningslänkar</h3>
-                <div class="download-links">
-            `;
-
-            if (downloadType === 'audio') {
-                html += `
-                    <a href="https://ytmp3.nu/downloader/?url=${encodeURIComponent(videoUrl)}" 
-                       class="download-link" target="_blank">
-                        <span>🎵 YTMP3 - MP3 Converter</span>
-                        <span class="quality-badge">Audio</span>
-                    </a>
-                    <a href="https://notube.lol/sv/${videoId}" 
-                       class="download-link" target="_blank">
-                        <span>🎵 Notube - Ladda ner ljud</span>
-                        <span class="quality-badge">MP3</span>
-                    </a>
-                    <a href="https://www.y2mate.com/youtube/${videoId}" 
-                       class="download-link" target="_blank">
-                        <span>🎵 Y2Mate</span>
-                        <span class="quality-badge">Flera format</span>
-                    </a>
-                `;
+            if (type === 'audio') {
+                return [
+                    {
+                        name: 'Y2Mate',
+                        badge: 'Populär',
+                        description: 'Snabb konvertering till MP3. Välj kvalitet innan nedladdning.',
+                        url: `https://www.y2mate.com/youtube/${getVideoId(videoUrl)}`
+                    },
+                    {
+                        name: 'YTMP3',
+                        badge: 'Enkel',
+                        description: 'Enkel och snabb MP3-konvertering utan krångel.',
+                        url: `https://ytmp3.nu/downloader/?url=${encodedUrl}`
+                    },
+                    {
+                        name: 'MP3 Converter',
+                        badge: 'Gratis',
+                        description: 'Konvertera till MP3 i hög kvalitet.',
+                        url: `https://mp3-convert.org/sv/${getVideoId(videoUrl)}`
+                    },
+                    {
+                        name: 'SaveFrom',
+                        badge: 'Pålitlig',
+                        description: 'Väletablerad tjänst för ljudnedladdning.',
+                        url: `https://sv.savefrom.net/?url=${encodedUrl}`
+                    }
+                ];
             } else {
-                html += `
-                    <a href="https://notube.lol/sv/${videoId}" 
-                       class="download-link" target="_blank">
-                        <span>🎬 Notube - Ladda ner video</span>
-                        <span class="quality-badge">HD</span>
-                    </a>
-                    <a href="https://www.y2mate.com/youtube/${videoId}" 
-                       class="download-link" target="_blank">
-                        <span>🎬 Y2Mate</span>
-                        <span class="quality-badge">Flera kvaliteter</span>
-                    </a>
-                    <a href="https://ytmp3.nu/downloader/?url=${encodeURIComponent(videoUrl)}" 
-                       class="download-link" target="_blank">
-                        <span>🎬 YTMP3 - Video Downloader</span>
-                        <span class="quality-badge">Video</span>
-                    </a>
-                `;
+                return [
+                    {
+                        name: 'Y2Mate',
+                        badge: 'Populär',
+                        description: 'Ladda ner video i olika kvaliteter (360p - 1080p).',
+                        url: `https://www.y2mate.com/youtube/${getVideoId(videoUrl)}`
+                    },
+                    {
+                        name: 'SaveFrom',
+                        badge: 'HD-kvalitet',
+                        description: 'Stöder nedladdning i Full HD och 4K.',
+                        url: `https://sv.savefrom.net/?url=${encodedUrl}`
+                    },
+                    {
+                        name: 'YTGoConverter',
+                        badge: 'Snabb',
+                        description: 'Snabb videondladdning utan registrering.',
+                        url: `https://ytgoconverter.com/sv/${getVideoId(videoUrl)}`
+                    },
+                    {
+                        name: 'SnapSave',
+                        badge: 'Flera format',
+                        description: 'Ladda ner i MP4, WebM och andra format.',
+                        url: `https://snapsave.app/sv?url=${encodedUrl}`
+                    }
+                ];
             }
-
-            html += '</div>';
-            videoInfoEl.innerHTML = html;
-            videoInfoEl.classList.add('show');
-            showStatus('Välj en nedladdningstjänst ovan!', 'success');
         }
 
+        // Enter-tangent för att visa alternativ
         document.getElementById('videoUrl').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                getDownloadLinks();
+                showDownloadOptions();
             }
         });
     </script>
