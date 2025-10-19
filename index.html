@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Audio Downloader</title>
+    <title>YouTube Downloader</title>
     <style>
         * {
             margin: 0;
@@ -168,8 +168,22 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎵 YouTube Audio Downloader</h1>
-        <p class="subtitle">Ladda ner ljud från YouTube-videor enkelt</p>
+        <h1>🎵 YouTube Downloader</h1>
+        <p class="subtitle">Ladda ner ljud eller video från YouTube</p>
+
+        <div class="input-group">
+            <label>Välj nedladdningstyp</label>
+            <div class="format-group">
+                <label class="format-option selected">
+                    <input type="radio" name="downloadType" value="audio" checked>
+                    <div>🎵 Ljud</div>
+                </label>
+                <label class="format-option">
+                    <input type="radio" name="downloadType" value="video">
+                    <div>🎬 Video</div>
+                </label>
+            </div>
+        </div>
 
         <div class="input-group">
             <label for="videoUrl">YouTube URL</label>
